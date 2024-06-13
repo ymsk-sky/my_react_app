@@ -36,11 +36,3 @@
     transform: rotate(360deg);
   }
 }
-
-.My-Mask {
-  width: 256pt;
-  height: 256pt;
-  background-color: #8cffa0;
-  -webkit-mask-image: url(svg_icon.svg);
-  mask-image: url(svg_icon.svg);
-}
