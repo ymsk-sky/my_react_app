@@ -3,9 +3,23 @@
 import React, { useState } from "react";
 import { Button, TextField } from "@mui/material";
 
+const VALUE_MAX_LENGTH = 10;
+const STRING_MAX_LENGTH = 10;
+
 export default function MyTextField() {
     const [myValue, setMyValue] = useState<string>("");
     const [myString, setMyString] = useState<string>("");
+
+    const confirmLastDot = () => {
+        // 入力確定時に末尾がピリオドだったときの処理
+        if (myValue.endsWith(".")) {
+            if (myValue.length === VALUE_MAX_LENGTH) {
+                setMyValue(myValue.slice(0, -1));
+            } else {
+                setMyValue(myValue + "0");
+            }
+        }
+    }
 
     const updataMyValueLimited = (e: React.ChangeEvent<HTMLInputElement>) => {
         /*
@@ -13,7 +27,8 @@ export default function MyTextField() {
          * 通常のキーボードからの入力だけでなくコピペからの入力も制限される
          */
         const value = e.target.value;
-        if (value.length > 10) {
+        console.log(value);
+        if (value.length > VALUE_MAX_LENGTH) {
             // 文字数制限
             return;
         }
@@ -37,7 +52,7 @@ export default function MyTextField() {
          * 通常のキーボードからの入力だけでなくコピペからの入力も制限される
          */
         const value = e.target.value;
-        if (value.length > 10) {
+        if (value.length > STRING_MAX_LENGTH) {
             // 文字数制限
             return;
         }
@@ -52,6 +67,7 @@ export default function MyTextField() {
             variant="standard"
             value={myValue}
             onChange={updataMyValueLimited}
+            onBlur={confirmLastDot}
             sx={{
                 backgroundColor: "#FFFFFF",
                 marginTop: 4,
