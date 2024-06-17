@@ -27,22 +27,25 @@ export default function MyTextField() {
          * 通常のキーボードからの入力だけでなくコピペからの入力も制限される
          */
         const value = e.target.value;
-        console.log(value);
-        if (value.length > VALUE_MAX_LENGTH) {
-            // 文字数制限
-            return;
-        }
+
         // 数字と小数点以外を削除
         const numericValue = value.replace(/[^0-9.]/g, "");
+        let limitedValue = numericValue;
+
+        // 文字数制限(超過分は削除)
+        if (numericValue.length > VALUE_MAX_LENGTH) {
+            limitedValue = numericValue.slice(0, VALUE_MAX_LENGTH);
+        }
+
         // 1つめの小数点位置を取得
         const dotIndex = numericValue.indexOf(".");
-        let limitedValue = numericValue;
         if (dotIndex >= 0) {
             // ピリオドが存在する場合, 1つ目以外は削除
             limitedValue = numericValue.slice(0, dotIndex + 1) + numericValue.slice(dotIndex + 1).replace(/\./g, "");
         }
         // 文字列先頭が複数の0の場合1つにする
         limitedValue = limitedValue.replace(/^0+([0-9])/, `$1`);
+
         setMyValue(limitedValue);
     };
 
@@ -52,12 +55,14 @@ export default function MyTextField() {
          * 通常のキーボードからの入力だけでなくコピペからの入力も制限される
          */
         const value = e.target.value;
+
+        // a-z, A-Z, 0-9 以外の文字をすべて削除
+        let limitedValue = value.replace(/[^a-zA-Z0-9]/g, "");
         if (value.length > STRING_MAX_LENGTH) {
             // 文字数制限
-            return;
+            limitedValue = limitedValue.slice(0, STRING_MAX_LENGTH);
         }
-        // a-z, A-Z, 0-9 以外の文字をすべて削除
-        const limitedValue = value.replace(/[^a-zA-Z0-9]/g, "");
+
         setMyString(limitedValue);
     }
 
