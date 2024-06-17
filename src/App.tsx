@@ -2,6 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Header from './components/Header';
+import MyTextField from './components/MyTextField';
 
 function App() {
   return (
@@ -20,7 +21,8 @@ function App() {
         >
           Learn React
         </a>
-      </header>
+        <MyTextField />
+        </header>
     </div>
   );
 }
