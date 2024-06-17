@@ -38,10 +38,16 @@ export default function MyTextField() {
         }
 
         // 1つめの小数点位置を取得
-        const dotIndex = numericValue.indexOf(".");
+        const dotIndex = limitedValue.indexOf(".");
         if (dotIndex >= 0) {
             // ピリオドが存在する場合, 1つ目以外は削除
-            limitedValue = numericValue.slice(0, dotIndex + 1) + numericValue.slice(dotIndex + 1).replace(/\./g, "");
+            limitedValue = limitedValue.slice(0, dotIndex + 1) + limitedValue.slice(dotIndex + 1).replace(/\./g, "");
+            if (dotIndex == 0) {
+                // 1つ目が先頭に存在していた場合は削除: e.g.) .1234 -> 1234
+                // limitedValue = limitedValue.slice(1, limitedValue.length);
+                // 1つ目が先頭に存在していた場合は置換: e.g.) .1234 -> 0.1234, .123456789 -> 0.12345678 (文字数制限超過は削除)
+                limitedValue = "0" + limitedValue.slice(0, VALUE_MAX_LENGTH - 1);
+            }
         }
         // 文字列先頭が複数の0の場合1つにする
         limitedValue = limitedValue.replace(/^0+([0-9])/, `$1`);
