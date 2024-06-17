@@ -8,8 +8,15 @@ export default function MyTextField() {
     const [myString, setMyString] = useState<string>("");
 
     const updataMyValueLimited = (e: React.ChangeEvent<HTMLInputElement>) => {
-        /* 例) 入力: 00.123.45 -> 0.12345 になる */
+        /*
+         * 例) 入力: 00.123.45 -> 0.12345 になる
+         * 通常のキーボードからの入力だけでなくコピペからの入力も制限される
+         */
         const value = e.target.value;
+        if (value.length > 10) {
+            // 文字数制限
+            return;
+        }
         // 数字と小数点以外を削除
         const numericValue = value.replace(/[^0-9.]/g, "");
         // 1つめの小数点位置を取得
@@ -25,7 +32,18 @@ export default function MyTextField() {
     };
 
     const updateMyStringLimited = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setMyString(e.target.value);
+        /*
+         * 例) 入力: あabc.#ん? -> abc になる
+         * 通常のキーボードからの入力だけでなくコピペからの入力も制限される
+         */
+        const value = e.target.value;
+        if (value.length > 10) {
+            // 文字数制限
+            return;
+        }
+        // a-z, A-Z, 0-9 以外の文字をすべて削除
+        const limitedValue = value.replace(/[^a-zA-Z0-9]/g, "");
+        setMyString(limitedValue);
     }
 
     return (
