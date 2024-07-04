@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Header from './components/Header';
 import MyTextField from './components/MyTextField';
+import TestState from './components/TestState';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           Learn React
         </a>
         <MyTextField />
+        <TestState />
         </header>
     </div>
   );
